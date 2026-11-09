@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZhibekBank — Банк шексіз мүмкіндіктер | Новый стандарт банкинга в Казахстане</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        zhibek: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                            dark: '#081c15',
+                            gold: '#d4af37',
+                            'gold-hover': '#b59326',
+                            accent: '#00d285'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            background-color: #050e0b;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism utility */
+        .glass-card {
+            background: rgba(13, 34, 27, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .glass-card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card-hover:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 20px 40px -15px rgba(16, 185, 129, 0.25);
+        }
+
+        /* Custom Gradients */
+        .gradient-text {
+            background: linear-gradient(135deg, #ffffff 0%, #d4af37 50%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-gold {
+            background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+        }
+
+        .bg-silk-pattern {
+            background-image: radial-gradient(rgba(16, 185, 129, 0.12) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050e0b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #065f46;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #10b981;
+        }
+
+        /* Slider Custom Styling */
+        input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 22px;
+            width: 22px;
+            border-radius: 50%;
+            background: #d4af37;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+            margin-top: -8px;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: #11382b;
+            border-radius: 3px;
+        }
+
+        /* Card 3D tilt effect */
+        .bank-card {
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+        }
+        .card-container:hover .bank-card {
+            transform: rotateY(12deg) rotateX(6deg);
+        }
+
+        /* Glow effect */
+        .glow-effect {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(16,185,129,0.25) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-silk-pattern min-h-screen flex flex-col justify-between antialiased">
+
+    <!-- Top Announcement Bar / GitHub Toolbar -->
+    <div class="bg-gradient-to-r from-zhibek-900 via-emerald-900 to-zhibek-dark border-b border-zhibek-gold/20 py-2.5 px-4 text-xs sm:text-sm">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-zhibek-gold/20 text-zhibek-gold border border-zhibek-gold/30">
+                    <i class="fa-solid fa-sparkles mr-1"></i> New
+                </span>
+                <span class="text-gray-300 hidden sm:inline" data-i18n="announcement">ZhibekBank — Инновационный цифровой банк Казахстана</span>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <!-- GitHub Export Action Button -->
+                <button onclick="openGithubModal()" class="flex items-center gap-1.5 px-3 py-1 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-full transition-all text-xs font-medium">
+                    <i class="fa-brands fa-github text-zhibek-gold"></i>
+                    <span>Экспорт на GitHub</span>
+                </button>
+
+                <!-- Language Switcher -->
+                <div class="flex items-center space-x-1 text-xs border-l border-white/10 pl-3">
+                    <button onclick="switchLanguage('kk')" class="lang-btn px-2 py-0.5 rounded hover:bg-white/10 text-gray-300" id="lang-kk">КҚ</button>
+                    <span class="text-gray-600">|</span>
+                    <button onclick="switchLanguage('ru')" class="lang-btn px-2 py-0.5 rounded hover:bg-white/10 font-bold text-zhibek-gold" id="lang-ru">RU</button>
+                    <span class="text-gray-600">|</span>
+                    <button onclick="switchLanguage('en')" class="lang-btn px-2 py-0.5 rounded hover:bg-white/10 text-gray-300" id="lang-en">EN</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <header class="sticky top-0 z-40 glass-card border-b border-zhibek-gold/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-zhibek-700 via-zhibek-500 to-zhibek-gold p-0.5 shadow-lg shadow-zhibek-500/20 group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full bg-zhibek-dark rounded-[10px] flex items-center justify-center">
+                            <i class="fa-solid fa-infinity text-zhibek-gold text-xl group-hover:rotate-180 transition-transform duration-700"></i>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-extrabold tracking-tight text-white flex items-center">
+                            ZHIBEK<span class="text-zhibek-gold">BANK</span>
+                        </span>
+                        <span class="text-[9px] uppercase tracking-widest text-zhibek-500 font-semibold -mt-1" data-i18n="tagline_short">Silk Road Financial Group</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex space-x-8 text-sm font-medium">
+                    <a href="#cards" class="text-gray-300 hover:text-zhibek-gold transition-colors" data-i18n="nav_cards">Карты</a>
+                    <a href="#calculator" class="text-gray-300 hover:text-zhibek-gold transition-colors" data-i18n="nav_calc">Калькулятор</a>
+                    <a href="#rates" class="text-gray-300 hover:text-zhibek-gold transition-colors" data-i18n="nav_rates">Курсы валют</a>
+                    <a href="#advantages" class="text-gray-300 hover:text-zhibek-gold transition-colors" data-i18n="nav_about">Преимущества</a>
+                    <a href="#faq" class="text-gray-300 hover:text-zhibek-gold transition-colors" data-i18n="nav_faq">FAQ</a>
+                </nav>
+
+                <!-- Actions -->
+                <div class="hidden md:flex items-center gap-4">
+                    <button onclick="openLoginModal()" class="px-5 py-2.5 rounded-xl border border-zhibek-gold/40 hover:border-zhibek-gold text-zhibek-gold hover:bg-zhibek-gold/10 font-semibold text-sm transition-all duration-300 flex items-center gap-2">
+                        <i class="fa-solid fa-user-lock text-xs"></i>
+                        <span data-i18n="btn_login">Войти в Zhibek 24</span>
+                    </button>
+                    <a href="#cards" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-zhibek-600 to-zhibek-500 hover:from-zhibek-500 hover:to-zhibek-600 text-white font-semibold text-sm shadow-lg shadow-zhibek-600/30 hover:shadow-zhibek-500/50 transition-all duration-300 transform hover:-translate-y-0.5">
+                        <span data-i18n="btn_open_card">Заказать карту</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-gray-300 hover:text-white p-2">
+                    <i class="fa-solid fa-bars text-2xl" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden glass-card border-t border-zhibek-gold/20 px-4 pt-4 pb-6 space-y-3">
+            <a href="#cards" onclick="toggleMobileMenu()" class="block text-gray-200 py-2 font-medium" data-i18n="nav_cards">Карты</a>
+            <a href="#calculator" onclick="toggleMobileMenu()" class="block text-gray-200 py-2 font-medium" data-i18n="nav_calc">Калькулятор</a>
+            <a href="#rates" onclick="toggleMobileMenu()" class="block text-gray-200 py-2 font-medium" data-i18n="nav_rates">Курсы валют</a>
+            <a href="#advantages" onclick="toggleMobileMenu()" class="block text-gray-200 py-2 font-medium" data-i18n="nav_about">Преимущества</a>
+            <a href="#faq" onclick="toggleMobileMenu()" class="block text-gray-200 py-2 font-medium" data-i18n="nav_faq">FAQ</a>
+            <div class="pt-4 border-t border-white/10 flex flex-col gap-3">
+                <button onclick="openLoginModal(); toggleMobileMenu();" class="w-full py-3 rounded-xl border border-zhibek-gold text-zhibek-gold text-center font-semibold">
+                    <i class="fa-solid fa-user-lock mr-2"></i> <span data-i18n="btn_login">Войти в Zhibek 24</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative py-16 md:py-28 overflow-hidden">
+        <div class="glow-effect top-10 left-10"></div>
+        <div class="glow-effect bottom-10 right-10"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Text -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card border-zhibek-gold/30 text-xs text-zhibek-gold font-medium">
+                        <i class="fa-solid fa-gem text-zhibek-gold animate-pulse"></i>
+                        <span data-i18n="hero_badge">Новое поколение цифрового банкинга</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-white">
+                        Банк шексіз мүмкіндіктер — <br class="hidden sm:inline">
+                        <span class="gradient-text">ZhibekBank</span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed" data-i18n="hero_subtitle">
+                        Соединяя традиции Шелкового пути с новейшими финансовыми технологиями. Мгновенные переводы без комиссий, до 15% кэшбэка и депозиты с высокой ставкой KZT.
+                    </p>
+
+                    <!-- Features bullets -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2 max-w-lg mx-auto lg:mx-0 text-left">
+                        <div class="flex items-center gap-2 text-sm text-gray-300">
+                            <i class="fa-solid fa-circle-check text-zhibek-500"></i>
+                            <span data-i18n="hero_feat1">0 ₸ обслуживание</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-300">
+                            <i class="fa-solid fa-circle-check text-zhibek-500"></i>
+                            <span data-i18n="hero_feat2">До 15% Кэшбэк</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-300">
+                            <i class="fa-solid fa-circle-check text-zhibek-500"></i>
+                            <span data-i18n="hero_feat3">Кредит за 2 минуты</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#cards" class="px-8 py-4 rounded-xl bg-gradient-to-r from-zhibek-gold to-yellow-600 text-zhibek-dark font-bold shadow-lg shadow-zhibek-gold/20 hover:shadow-zhibek-gold/40 hover:scale-105 transition-all text-center">
+                            <i class="fa-solid fa-credit-card mr-2"></i> <span data-i18n="btn_get_card">Получить карту Zhibek</span>
+                        </a>
+                        <a href="#calculator" class="px-8 py-4 rounded-xl glass-card hover:bg-white/10 text-white font-semibold border border-white/20 transition-all text-center">
+                            <i class="fa-solid fa-calculator text-zhibek-gold mr-2"></i> <span data-i18n="btn_calc_credit">Рассчитать кредит</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Graphic Card (3D Interaction Visual) -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="card-container relative w-full max-w-sm">
+                        <!-- Card Floating Elements -->
+                        <div class="bank-card w-full aspect-[1.586/1] rounded-2xl p-6 bg-gradient-to-br from-zhibek- dark via-zhibek-900 to-black border border-zhibek-gold/40 shadow-2xl shadow-zhibek-500/20 relative overflow-hidden flex flex-col justify-between">
+                            <!-- Background Ornament -->
+                            <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
+                                <i class="fa-solid fa-dragon text-9xl text-zhibek-gold"></i>
+                            </div>
+                            
+                            <!-- Top Card Info -->
+                            <div class="flex justify-between items-start z-10">
+                                <div>
+                                    <div class="text-xs uppercase tracking-widest text-zhibek-gold font-bold">ZHIBEK BLACK</div>
+                                    <div class="text-[10px] text-gray-400">PREMIUM CARD</div>
+                                </div>
+                                <div class="w-10 h-8 bg-gradient-to-tr from-yellow-300 to-yellow-600 rounded-md opacity-80 flex items-center justify-center">
+                                    <i class="fa-solid fa-microchip text-black text-xs"></i>
+                                </div>
+                            </div>
+
+                            <!-- Card Number Mock -->
+                            <div class="my-4 z-10">
+                                <div class="text-xs text-gray-400 mb-1">Card Number</div>
+                                <div class="font-mono text-lg tracking-widest text-white font-semibold">4400 •••• •••• 8899</div>
+                            </div>
+
+                            <!-- Bottom Card Info -->
+                            <div class="flex justify-between items-end z-10">
+                                <div>
+                                    <div class="text-[10px] uppercase text-gray-400">Cardholder</div>
+                                    <div class="text-sm font-semibold tracking-wide text-gray-100">ALIKHAN SEITOV</div>
+                                </div>
+                                <div class="text-right">
+                                    <i class="fa-brands fa-cc-mastercard text-3xl text-zhibek-gold"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Secondary floating mini widget -->
+                        <div class="absolute -bottom-6 -left-6 glass-card p-4 rounded-xl shadow-xl flex items-center gap-3 border border-zhibek-gold/30 animate-bounce" style="animation-duration: 4s;">
+                            <div class="w-10 h-10 rounded-full bg-zhibek-gold/20 flex items-center justify-center text-zhibek-gold">
+                                <i class="fa-solid fa-arrow-down-left text-lg"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-gray-400">Кэшбэк начислен</div>
+                                <div class="text-sm font-bold text-zhibek-gold">+ 12,450 ₸</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CARDS SECTION -->
+    <section id="cards" class="py-16 bg-zhibek-dark/50 border-t border-b border-zhibek-gold/10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4" data-i18n="cards_title">Флагманские карты Zhibek</h2>
+                <p class="text-gray-400" data-i18n="cards_subtitle">Выберите под свои ежедневные задачи и путешествия с уникальной системой привилегий</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Card 1: Zhibek Silk (Standard) -->
+                <div class="glass-card glass-card-hover rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="h-48 rounded-xl bg-gradient-to-br from-emerald-800 to-zhibek-900 p-5 flex flex-col justify-between mb-6 shadow-md relative overflow-hidden border border-emerald-500/30">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white text-lg tracking-wider">ZHIBEK SILK</span>
+                                <i class="fa-solid fa-wifi text-white/70"></i>
+                            </div>
+                            <div class="font-mono text-sm tracking-widest text-white/80">4400 •••• •••• 1234</div>
+                            <div class="flex justify-between items-end">
+                                <span class="text-xs text-white/70">DEBIT KZT</span>
+                                <i class="fa-brands fa-cc-visa text-2xl text-white"></i>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-white mb-2">Zhibek Silk Daily</h3>
+                        <p class="text-sm text-gray-400 mb-4" data-i18n="card1_desc">Идеальная карта для ежедневных покупок с повышенным кэшбэком в супермаркетах и аптеках.</p>
+                        
+                        <ul class="space-y-2 text-sm text-gray-300 mb-6">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-zhibek-500"></i> <span>Кэшбэк до 5% на категории</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-zhibek-500"></i> <span>0 ₸ за обслуживание всегда</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-zhibek-500"></i> <span>Снятие наличных в любых банкоматах 0%</span></li>
+                        </ul>
+                    </div>
+
+                    <button onclick="orderCardModal('Zhibek Silk Daily')" class="w-full py-3 rounded-xl border border-zhibek-500 text-zhibek-500 hover:bg-zhibek-500 hover:text-white font-semibold transition-all">
+                        Заказать бесплатно
+                    </button>
+                </div>
+
+                <!-- Card 2: Zhibek Gold (Popular) -->
+                <div class="glass-card glass-card-hover rounded-2xl p-6 flex flex-col justify-between border-zhibek-gold/50 relative">
+                    <div class="absolute -top-3 right-6 bg-zhibek-gold text-zhibek-dark px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Популярный выбор</div>
+                    <div>
+                        <div class="h-48 rounded-xl bg-gradient-to-br from-yellow-700 via-amber-600 to-yellow-900 p-5 flex flex-col justify-between mb-6 shadow-md relative overflow-hidden border border-zhibek-gold/40">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white text-lg tracking-wider">ZHIBEK GOLD</span>
+                                <i class="fa-solid fa-wifi text-white/70"></i>
+                            </div>
+                            <div class="font-mono text-sm tracking-widest text-white/90">4400 •••• •••• 7777</div>
+                            <div class="flex justify-between items-end">
+                                <span class="text-xs text-yellow-200">GOLD REWARDS</span>
+                                <i class="fa-brands fa-cc-mastercard text-3xl text-white"></i>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-white mb-2">Zhibek Gold Premium</h3>
+                        <p class="text-sm text-gray-400 mb-4" data-i18n="card2_desc">Максимальный комфорт, доступ в бизнес-залы аэропортов и повышенный накопительный процент.</p>
+                        
+                        <ul class="space-y-2 text-sm text-gray-300 mb-6">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-zhibek-gold"></i> <span>Кэшбэк до 10% на все АЗС и Рестораны</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-zhibek-gold"></i> <span>Бесплатные страховки для путешествий</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-zhibek-gold"></i> <span>Персональный менеджер 24/7</span></li>
+                        </ul>
+                    </div>
+
+                    <button onclick="orderCardModal('Zhibek Gold Premium')" class="w-full py-3 rounded-xl bg-zhibek-gold hover:bg-zhibek-gold-hover text-zhibek-dark font-bold shadow-lg transition-all">
+                        Оформить Gold
+                    </button>
+                </div>
+
+                <!-- Card 3: Zhibek Business -->
+                <div class="glass-card glass-card-hover rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="h-48 rounded-xl bg-gradient-to-br from-gray-900 via-zinc-800 to-black p-5 flex flex-col justify-between mb-6 shadow-md relative overflow-hidden border border-gray-700">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-gray-200 text-lg tracking-wider">ZHIBEK BUSINESS</span>
+                                <i class="fa-solid fa-building-columns text-gray-400"></i>
+                            </div>
+                            <div class="font-mono text-sm tracking-widest text-gray-300">4400 •••• •••• 9900</div>
+                            <div class="flex justify-between items-end">
+                                <span class="text-xs text-zhibek-500">CORPORATE</span>
+                                <i class="fa-brands fa-cc-visa text-2xl text-gray-300"></i>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-white mb-2">Zhibek Business Pro</h3>
+                        <p class="text-sm text-gray-400 mb-4" data-i18n="card3_desc">Для предпринимателей и юридических лиц. Интеграция с 1С и налоговыми сервисами.</p>
+                        
+                        <ul class="space-y-2 text-sm text-gray-300 mb-6">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-zhibek-500"></i> <span>0 ₸ за внешние платежи первые 3 мес.</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-zhibek-500"></i> <span>Овердрафт до 10 000 000 ₸</span></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-zhibek-500"></i> <span>Эквайринг по низкой ставке 0.8%</span></li>
+                        </ul>
+                    </div>
+
+                    <button onclick="orderCardModal('Zhibek Business Pro')" class="w-full py-3 rounded-xl border border-gray-600 hover:border-gray-400 text-white font-semibold transition-all">
+                        Открыть для бизнеса
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CALCULATOR SECTION -->
+    <section id="calculator" class="py-16 md:py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-5 space-y-4">
+                    <span class="text-zhibek-gold font-bold text-sm tracking-wider uppercase" data-i18n="calc_badge">Выгодные условия</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white" data-i18n="calc_heading">Онлайн-калькулятор кредита и депозита</h2>
+                    <p class="text-gray-300 text-sm leading-relaxed" data-i18n="calc_desc">
+                        Рассчитайте условия по онлайн-кредиту Zhibek Express без залога или выберите депозитный вклад с капитализацией процентов.
+                    </p>
+
+                    <!-- Tab Buttons -->
+                    <div class="inline-flex p-1 rounded-xl glass-card border-zhibek-gold/30">
+                        <button id="calc-tab-credit" onclick="setCalcMode('credit')" class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all bg-zhibek-gold text-zhibek-dark shadow">
+                            Кредит
+                        </button>
+                        <button id="calc-tab-deposit" onclick="setCalcMode('deposit')" class="px-5 py-2.5 rounded-lg font-semibold text-sm transition-all text-gray-300 hover:text-white">
+                            Депозит (до 17.5%)
+                        </button>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-zhibek-900/40 border border-zhibek-gold/20 text-xs text-gray-400 space-y-2">
+                        <div class="flex items-center gap-2 text-zhibek-gold font-semibold">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <span data-i18n="calc_guarantee">Гарантия Казахстанского фонда гарантирования депозитов (КФГД)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Widget -->
+                <div class="lg:col-span-7">
+                    <div class="glass-card rounded-3xl p-6 sm:p-8 border-zhibek-gold/30 shadow-2xl">
+                        
+                        <!-- Slider 1: Amount -->
+                        <div class="space-y-3 mb-8">
+                            <div class="flex justify-between items-center">
+                                <label id="label-amount" class="text-sm font-semibold text-gray-300">Сумма кредита</label>
+                                <span id="display-amount" class="text-2xl font-bold text-zhibek-gold">2 000 000 ₸</span>
+                            </div>
+                            <input type="range" id="input-amount" min="100000" max="15000000" step="50000" value="2000000" oninput="calculateFinancials()" class="w-full">
+                            <div class="flex justify-between text-xs text-gray-500">
+                                <span>100 000 ₸</span>
+                                <span>15 000 000 ₸</span>
+                            </div>
+                        </div>
+
+                        <!-- Slider 2: Term -->
+                        <div class="space-y-3 mb-8">
+                            <div class="flex justify-between items-center">
+                                <label id="label-term" class="text-sm font-semibold text-gray-300">Срок (в месяцах)</label>
+                                <span id="display-term" class="text-2xl font-bold text-zhibek-gold">24 мес.</span>
+                            </div>
+                            <input type="range" id="input-term" min="3" max="60" step="1" value="24" oninput="calculateFinancials()" class="w-full">
+                            <div class="flex justify-between text-xs text-gray-500">
+                                <span>3 мес.</span>
+                                <span>60 мес.</span>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Output Cards -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-5 rounded-2xl bg-zhibek-dark/80 border border-zhibek-gold/20 mb-8">
+                            <div>
+                                <div class="text-xs text-gray-400 mb-1" id="res-monthly-label">Ежемесячный платеж</div>
+                                <div class="text-2xl font-extrabold text-white" id="res-monthly">98 400 ₸</div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-gray-400 mb-1" id="res-total-label">Общая сумма выплат</div>
+                                <div class="text-2xl font-extrabold text-zhibek-500" id="res-total">2 361 600 ₸</div>
+                            </div>
+                        </div>
+
+                        <!-- CTA button -->
+                        <button onclick="applyForLoanModal()" class="w-full py-4 rounded-xl bg-gradient-to-r from-zhibek-600 via-zhibek-500 to-zhibek-gold text-zhibek-dark font-extrabold text-base shadow-xl hover:opacity-95 transition-all">
+                            <span id="calc-cta-btn">Оформить заявку онлайн</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CURRENCY EXCHANGE RATES SECTION -->
+    <section id="rates" class="py-16 bg-zhibek-dark/60 border-t border-zhibek-gold/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <div class="lg:col-span-7">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+                            <i class="fa-solid fa-arrow-trend-up text-zhibek-gold"></i>
+                            <span data-i18n="rates_title">Курсы валют Zhibek Bank</span>
+                        </h2>
+                        <span class="text-xs text-gray-400" id="rates-time">Обновлено: Сегодня</span>
+                    </div>
+
+                    <div class="glass-card rounded-2xl overflow-hidden border-zhibek-gold/20">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-zhibek-900/80 text-xs text-zhibek-gold uppercase">
+                                <tr>
+                                    <th class="px-6 py-4">Валюта</th>
+                                    <th class="px-6 py-4">Покупка</th>
+                                    <th class="px-6 py-4">Продажа</th>
+                                    <th class="px-6 py-4 hidden sm:table-cell">НБ РК</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-white/5 text-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 flex items-center gap-3 font-semibold">
+                                        <span class="w-7 h-7 rounded-full bg-blue-600/30 text-blue-400 flex items-center justify-center font-bold text-xs">$</span>
+                                        USD / KZT
+                                    </td>
+                                    <td class="px-6 py-4 font-mono font-medium text-emerald-400">498.50 ₸</td>
+                                    <td class="px-6 py-4 font-mono font-medium text-gray-200">503.20 ₸</td>
+                                    <td class="px-6 py-4 font-mono text-gray-400 hidden sm:table-cell">500.10 ₸</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 flex items-center gap-3 font-semibold">
+                                        <span class="w-7 h-7 rounded-full bg-indigo-600/30 text-indigo-400 flex items-center justify-center font-bold text-xs">€</span>
+                                        EUR / KZT
+                                    </td>
+                                    <td class="px-6 py-4 font-mono font-medium text-emerald-400">541.00 ₸</td>
+                                    <td class="px-6 py-4 font-mono font-medium text-gray-200">547.50 ₸</td>
+                                    <td class="px-6 py-4 font-mono text-gray-400 hidden sm:table-cell">544.20 ₸</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 flex items-center gap-3 font-semibold">
+                                        <span class="w-7 h-7 rounded-full bg-red-600/30 text-red-400 flex items-center justify-center font-bold text-xs">₽</span>
+                                        RUB / KZT
+                                    </td>
+                                    <td class="px-6 py-4 font-mono font-medium text-emerald-400">5.15 ₸</td>
+                                    <td class="px-6 py-4 font-mono font-medium text-gray-200">5.45 ₸</td>
+                                    <td class="px-6 py-4 font-mono text-gray-400 hidden sm:table-cell">5.30 ₸</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 flex items-center gap-3 font-semibold">
+                                        <span class="w-7 h-7 rounded-full bg-red-700/30 text-yellow-400 flex items-center justify-center font-bold text-xs">¥</span>
+                                        CNY / KZT
+                                    </td>
+                                    <td class="px-6 py-4 font-mono font-medium text-emerald-400">68.40 ₸</td>
+                                    <td class="px-6 py-4 font-mono font-medium text-gray-200">70.10 ₸</td>
+                                    <td class="px-6 py-4 font-mono text-gray-400 hidden sm:table-cell">69.15 ₸</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Live Quick Converter -->
+                <div class="lg:col-span-5">
+                    <div class="glass-card rounded-2xl p-6 border-zhibek-gold/20">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-calculator text-zhibek-gold"></i> Быстрая конвертация
+                        </h3>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-xs text-gray-400">Вы отдаете</label>
+                                <div class="flex mt-1">
+                                    <input type="number" id="conv-give" value="100" oninput="convertCurrency()" class="w-full bg-zhibek-dark/80 border border-white/10 rounded-l-xl px-4 py-3 text-white font-mono focus:outline-none focus:border-zhibek-gold">
+                                    <select id="conv-give-curr" onchange="convertCurrency()" class="bg-zhibek-900 border border-l-0 border-white/10 rounded-r-xl px-3 text-zhibek-gold font-bold text-sm focus:outline-none">
+                                        <option value="USD">USD</option>
+                                        <option value="EUR">EUR</option>
+                                        <option value="RUB">RUB</option>
+                                        <option value="CNY">CNY</option>
+                                        <option value="KZT">KZT</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-center -my-2 relative z-10">
+                                <button onclick="swapCurrency()" class="w-8 h-8 rounded-full bg-zhibek-gold text-zhibek-dark flex items-center justify-center hover:rotate-180 transition-transform shadow-md">
+                                    <i class="fa-solid fa-arrow-right-arrow-left text-xs"></i>
+                                </button>
+                            </div>
+
+                            <div>
+                                <label class="text-xs text-gray-400">Вы получаете (ориентировочно)</label>
+                                <div class="flex mt-1">
+                                    <input type="text" id="conv-get" readonly class="w-full bg-zhibek-dark/80 border border-white/10 rounded-l-xl px-4 py-3 text-zhibek-gold font-mono font-bold focus:outline-none">
+                                    <select id="conv-get-curr" onchange="convertCurrency()" class="bg-zhibek-900 border border-l-0 border-white/10 rounded-r-xl px-3 text-zhibek-gold font-bold text-sm focus:outline-none">
+                                        <option value="KZT">KZT</option>
+                                        <option value="USD">USD</option>
+                                        <option value="EUR">EUR</option>
+                                        <option value="RUB">RUB</option>
+                                        <option value="CNY">CNY</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ADVANTAGES / WHY US SECTION -->
+    <section id="advantages" class="py-16 md:py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-zhibek-gold font-bold text-sm uppercase tracking-wider">Шелковый путь инноваций</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2" data-i18n="adv_title">Почему выбирают ZhibekBank?</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <div class="glass-card glass-card-hover rounded-2xl p-6 border-zhibek-gold/20">
+                    <div class="w-14 h-14 rounded-2xl bg-zhibek-500/10 border border-zhibek-500/30 flex items-center justify-center text-zhibek-500 text-2xl mb-6">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2" data-i18n="adv1_h">Мгновенность</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed" data-i18n="adv1_p">Переводы по номеру телефона в любые банки Казахстана за секунды без скрытых комиссий.</p>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-2xl p-6 border-zhibek-gold/20">
+                    <div class="w-14 h-14 rounded-2xl bg-zhibek-gold/10 border border-zhibek-gold/30 flex items-center justify-center text-zhibek-gold text-2xl mb-6">
+                        <i class="fa-solid fa-shield-cat"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2" data-i18n="adv2_h">Безопасность</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed" data-i18n="adv2_p">Биометрическая защита 3D-Secure 2.0 и мгновенная блокировка карты в приложении Zhibek 24.</p>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-2xl p-6 border-zhibek-gold/20">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-2xl mb-6">
+                        <i class="fa-solid fa-piggy-bank"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2" data-i18n="adv3_h">Высокий доход</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed" data-i18n="adv3_p">Максимальные эффективные ставки по депозитам в тенге с ежедневной капитализацией.</p>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-2xl p-6 border-zhibek-gold/20">
+                    <div class="w-14 h-14 rounded-2xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 text-2xl mb-6">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2" data-i18n="adv4_h">Забота 24/7</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed" data-i18n="adv4_p">Служба поддержки на казахском, русском и английском языках без ботов и долгих ожиданий.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION (ACCORDION) -->
+    <section id="faq" class="py-16 bg-zhibek-dark/50 border-t border-zhibek-gold/10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-extrabold text-white" data-i18n="faq_title">Часто задаваемые вопросы</h2>
+                <p class="text-gray-400 text-sm mt-2" data-i18n="faq_subtitle">Всё, что вам нужно знать о работе с ZhibekBank</p>
+            </div>
+
+            <div class="space-y-4" id="faq-accordion">
+                <!-- Item 1 -->
+                <div class="glass-card rounded-xl overflow-hidden border-zhibek-gold/20">
+                    <button onclick="toggleFaq(1)" class="w-full p-5 text-left font-semibold text-white flex justify-between items-center hover:bg-white/5 transition-colors">
+                        <span data-i18n="faq1_q">Как заказать доставку карты Zhibek Silk?</span>
+                        <i class="fa-solid fa-chevron-down text-zhibek-gold transition-transform duration-300" id="faq-icon-1"></i>
+                    </button>
+                    <div class="hidden p-5 pt-0 text-sm text-gray-300 border-t border-white/5" id="faq-ans-1">
+                        Вы можете оставить заявку прямо на этом сайте или в мобильном приложении. Курьер доставит карту бесплатно в течение 1 дня в любой крупный город Казахстана (Алматы, Астана, Шымкент, Караганда и др.).
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="glass-card rounded-xl overflow-hidden border-zhibek-gold/20">
+                    <button onclick="toggleFaq(2)" class="w-full p-5 text-left font-semibold text-white flex justify-between items-center hover:bg-white/5 transition-colors">
+                        <span data-i18n="faq2_q">Какие документы нужны для получения кредита?</span>
+                        <i class="fa-solid fa-chevron-down text-zhibek-gold transition-transform duration-300" id="faq-icon-2"></i>
+                    </button>
+                    <div class="hidden p-5 pt-0 text-sm text-gray-300 border-t border-white/5" id="faq-ans-2">
+                        Нужен только Удостоверение личности гражданина РК и биометрия в приложении. Никаких справок о доходах и залога для сумм до 7 000 000 ₸.
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="glass-card rounded-xl overflow-hidden border-zhibek-gold/20">
+                    <button onclick="toggleFaq(3)" class="w-full p-5 text-left font-semibold text-white flex justify-between items-center hover:bg-white/5 transition-colors">
+                        <span data-i18n="faq3_q">Застрахованы ли депозиты в ZhibekBank?</span>
+                        <i class="fa-solid fa-chevron-down text-zhibek-gold transition-transform duration-300" id="faq-icon-3"></i>
+                    </button>
+                    <div class="hidden p-5 pt-0 text-sm text-gray-300 border-t border-white/5" id="faq-ans-3">
+                        Да, ZhibekBank является официальным участником системы гарантирования депозитов РК (КФГД). Ваши сбережения застрахованы на сумму до 20 млн тенге по сберегательным вкладам.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-black/90 border-t border-zhibek-gold/20 pt-12 pb-8 text-sm text-gray-400">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-infinity text-zhibek-gold text-xl"></i>
+                        <span class="text-xl font-extrabold text-white">ZHIBEK<span class="text-zhibek-gold">BANK</span></span>
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed" data-i18n="footer_about">
+                        АО «ZhibekBank». Лицензия АРРФР №1.2.345/67 от 12.01.2024 г. Выдана Агентством Республики Казахстан по регулированию и развитию финансового рынка.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-4" data-i18n="footer_col1">Продукты</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#cards" class="hover:text-zhibek-gold">Дебетовые карты Zhibek</a></li>
+                        <li><a href="#cards" class="hover:text-zhibek-gold">Кредитные карты Gold</a></li>
+                        <li><a href="#calculator" class="hover:text-zhibek-gold">Онлайн кредиты</a></li>
+                        <li><a href="#calculator" class="hover:text-zhibek-gold">Депозит «Шелковый путь»</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-4" data-i18n="footer_col2">Контакты</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><i class="fa-solid fa-phone text-zhibek-gold mr-2"></i> 7711 (Бесплатно с мобильных)</li>
+                        <li><i class="fa-solid fa-envelope text-zhibek-gold mr-2"></i> support@zhibekbank.kz</li>
+                        <li><i class="fa-solid fa-location-dot text-zhibek-gold mr-2"></i> г. Алматы, пр. Достык 180</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-4" data-i18n="footer_col3">Приложение Zhibek 24</h4>
+                    <div class="flex flex-col gap-2">
+                        <a href="#" class="px-4 py-2 rounded-lg glass-card border-white/10 flex items-center gap-3 hover:border-zhibek-gold/50">
+                            <i class="fa-brands fa-apple text-xl text-white"></i>
+                            <div>
+                                <div class="text-[9px] uppercase">Download on</div>
+                                <div class="text-xs font-bold text-white">App Store</div>
+                            </div>
+                        </a>
+                        <a href="#" class="px-4 py-2 rounded-lg glass-card border-white/10 flex items-center gap-3 hover:border-zhibek-gold/50">
+                            <i class="fa-brands fa-google-play text-xl text-emerald-400"></i>
+                            <div>
+                                <div class="text-[9px] uppercase">Get it on</div>
+                                <div class="text-xs font-bold text-white">Google Play</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center text-xs gap-4">
+                <div>© 2026 ZhibekBank JSC. Все права защищены.</div>
+                <div class="flex space-x-4">
+                    <a href="#" class="hover:text-zhibek-gold"><i class="fa-brands fa-instagram text-lg"></i></a>
+                    <a href="#" class="hover:text-zhibek-gold"><i class="fa-brands fa-telegram text-lg"></i></a>
+                    <a href="#" class="hover:text-zhibek-gold"><i class="fa-brands fa-facebook text-lg"></i></a>
+                    <a href="#" class="hover:text-zhibek-gold"><i class="fa-brands fa-youtube text-lg"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL 1: LOGIN / ZHIBEK 24 -->
+    <div id="modal-login" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card rounded-2xl max-w-md w-full p-6 border-zhibek-gold/40 relative animate-scaleUp">
+            <button onclick="closeModal('modal-login')" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-zhibek-gold/20 text-zhibek-gold rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white">Вход в Zhibek 24</h3>
+                <p class="text-xs text-gray-400 mt-1">Введите номер телефона для входа в интернет-банкинг</p>
+            </div>
+
+            <form onsubmit="handleLoginSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="text-xs font-medium text-gray-300">Номер телефона (РК)</label>
+                    <input type="tel" required placeholder="+7 (707) 000-00-00" class="w-full mt-1 bg-zhibek-dark border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-zhibek-gold">
+                </div>
+                <div>
+                    <label class="text-xs font-medium text-gray-300">Пароль</label>
+                    <input type="password" required placeholder="••••••••" class="w-full mt-1 bg-zhibek-dark border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-zhibek-gold">
+                </div>
+                <button type="submit" class="w-full py-3 bg-zhibek-gold text-zhibek-dark font-bold rounded-xl shadow-lg hover:bg-zhibek-gold-hover transition-all">
+                    Войти
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: GITHUB EXPORT UTILITY -->
+    <div id="modal-github" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card rounded-2xl max-w-2xl w-full p-6 sm:p-8 border-zhibek-gold/40 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('modal-github')" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="flex items-center gap-3 mb-4">
+                <i class="fa-brands fa-github text-3xl text-zhibek-gold"></i>
+                <div>
+                    <h3 class="text-xl font-bold text-white">Экспорт ZhibekBank на GitHub</h3>
+                    <p class="text-xs text-gray-400">Пошаговая инструкция для публикации на GitHub Pages</p>
+                </div>
+            </div>
+
+            <!-- Download button -->
+            <div class="p-4 rounded-xl bg-zhibek-900/60 border border-zhibek-gold/30 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                    <div class="text-sm font-semibold text-white">Скачать готовый HTML файл</div>
+                    <div class="text-xs text-gray-400">Самодостаточный единый файл index.html со всеми стилями и скриптами</div>
+                </div>
+                <button onclick="downloadHtmlFile()" class="px-4 py-2.5 bg-zhibek-gold text-zhibek-dark font-bold text-xs rounded-xl shadow hover:bg-zhibek-gold-hover flex items-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-download"></i> Скачать index.html
+                </button>
+            </div>
+
+            <h4 class="font-bold text-sm text-zhibek-gold mb-3">Команды для публикации через Git Terminal:</h4>
+            
+            <div class="bg-black/90 p-4 rounded-xl border border-white/10 font-mono text-xs text-emerald-400 space-y-2 mb-6">
+                <div><span class="text-gray-500"># 1. Создайте папку и перейдите в нее</span></div>
+                <div>mkdir zhibek-bank && cd zhibek-bank</div>
+                <div class="pt-2"><span class="text-gray-500"># 2. Поместите downloaded index.html в эту папку и инициализируйте git</span></div>
+                <div>git init</div>
+                <div>git add index.html</div>
+                <div>git commit -m "Initial commit of ZhibekBank website"</div>
+                <div class="pt-2"><span class="text-gray-500"># 3. Привяжите ваш репозиторий GitHub</span></div>
+                <div>git branch -M main</div>
+                <div>git remote add origin https://github.com/ВАШ_USERNAME/zhibek-bank.git</div>
+                <div>git push -u origin main</div>
+            </div>
+
+            <h4 class="font-bold text-sm text-zhibek-gold mb-2">Активация GitHub Pages (Бесплатный хостинг):</h4>
+            <ol class="list-decimal list-inside text-xs text-gray-300 space-y-1.5 mb-6">
+                <li>Зайдите в репозиторий на GitHub в браузере.</li>
+                <li>Перейдите в <b>Settings</b> -> <b>Pages</b>.</li>
+                <li>В графе <b>Source</b> выберите ветку <code class="text-zhibek-gold">main</code> и папку <code class="text-zhibek-gold">/ (root)</code>.</li>
+                <li>Нажмите <b>Save</b>. Ваш сайт будет доступен по адресу: <code class="text-emerald-400">https://username.github.io/zhibek-bank/</code>.</li>
+            </ol>
+
+            <button onclick="closeModal('modal-github')" class="w-full py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-semibold">
+                Закрыть
+            </button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- MULTI-LANGUAGE TRANSLATION DICTIONARY ---
+        const translations = {
+            ru: {
+                announcement: "ZhibekBank — Инновационный цифровой банк Казахстана",
+                tagline_short: "Silk Road Financial Group",
+                nav_cards: "Карты",
+                nav_calc: "Калькулятор",
+                nav_rates: "Курсы валют",
+                nav_about: "Преимущества",
+                nav_faq: "FAQ",
+                btn_login: "Войти в Zhibek 24",
+                btn_open_card: "Заказать карту",
+                hero_badge: "Новое поколение цифрового банкинга",
+                hero_subtitle: "Соединяя традиции Шелкового пути с новейшими финансовыми технологиями. Мгновенные переводы без комиссий, до 15% кэшбэка и депозиты с высокой ставкой KZT.",
+                hero_feat1: "0 ₸ обслуживание",
+                hero_feat2: "До 15% Кэшбэк",
+                hero_feat3: "Кредит за 2 минуты",
+                btn_get_card: "Получить карту Zhibek",
+                btn_calc_credit: "Рассчитать кредит",
+                cards_title: "Флагманские карты Zhibek",
+                cards_subtitle: "Выберите под свои ежедневные задачи и путешествия с уникальной системой привилегий",
+                calc_badge: "Выгодные условия",
+                calc_heading: "Онлайн-калькулятор кредита и депозита",
+                calc_desc: "Рассчитайте условия по онлайн-кредиту Zhibek Express без залога или выберите депозитный вклад с капитализацией процентов.",
+                calc_guarantee: "Гарантия Казахстанского фонда гарантирования депозитов (КФГД)",
+                rates_title: "Курсы валют Zhibek Bank",
+                adv_title: "Почему выбирают ZhibekBank?",
+                adv1_h: "Мгновенность",
+                adv1_p: "Переводы по номеру телефона в любые банки Казахстана за секунды без скрытых комиссий.",
+                adv2_h: "Безопасность",
+                adv2_p: "Биометрическая защита 3D-Secure 2.0 и мгновенная блокировка карты в приложении Zhibek 24.",
+                adv3_h: "Высокий доход",
+                adv3_p: "Максимальные эффективные ставки по депозитам в тенге с ежедневной капитализацией.",
+                adv4_h: "Забота 24/7",
+                adv4_p: "Служба поддержки на казахском, русском и английском языках без ботов и долгих ожиданий.",
+                faq_title: "Часто задаваемые вопросы",
+                faq_subtitle: "Всё, что вам нужно знать о работе с ZhibekBank"
+            },
+            kk: {
+                announcement: "ZhibekBank — Қазақстанның инновациялық цифрлық банкі",
+                tagline_short: "Жібек Жолы Қаржы Тобы",
+                nav_cards: "Карталар",
+                nav_calc: "Калькулятор",
+                nav_rates: "Валюта бағамы",
+                nav_about: "Артықшылықтар",
+                nav_faq: "Сұрақтар",
+                btn_login: "Zhibek 24-ке кіру",
+                btn_open_card: "Картаға тапсырыс",
+                hero_badge: "Цифрлық банкингтің жаңа буыны",
+                hero_subtitle: "Жібек жолының дәстүрлерін ең соңғы қаржылық технологиялармен байланыстырамыз. Комиссиясыз жылдам аударымдар, 15%-ға дейін кэшбэк.",
+                hero_feat1: "0 ₸ қызмет көрсету",
+                hero_feat2: "15%-ға дейін Кэшбэк",
+                hero_feat3: "2 минутта несие",
+                btn_get_card: "Zhibek картасын алу",
+                btn_calc_credit: "Несиені есептеу",
+                cards_title: "Zhibek үздік карталары",
+                cards_subtitle: "Күнделікті қажеттіліктеріңіз бен саяхаттарыңыз үшін бірегей артықшылықтар жүйесін таңдаңыз",
+                calc_badge: "Тиімді шарттар",
+                calc_heading: "Онлайн несие және депозит калькуляторы",
+                calc_desc: "Кепілсіз Zhibek Express онлайн несиесінің шарттарын есептеңіз немесе пайыздарды капиталдандыру депозитін таңдаңыз.",
+                calc_guarantee: "Қазақстанның депозиттерге кепілдік беру қорының (ҚДҚҚ) кепілдігі",
+                rates_title: "Zhibek Bank валюта бағамдары",
+                adv_title: "Неліктен ZhibekBank таңдайды?",
+                adv1_h: "Жылдамдық",
+                adv1_p: "Телефон нөмірі арқылы Қазақстанның кез келген банкіне комиссиясыз секундтар ішінде аударымдар.",
+                adv2_h: "Қауіпсіздік",
+                adv2_p: "3D-Secure 2.0 биометриялық қорғанысы және Zhibek 24 қосымшасында картаны лезде бұғаттау.",
+                adv3_h: "Жоғары кіріс",
+                adv3_p: "Күнделікті капиталдандыруы бар теңгедегі депозиттер бойынша ең жоғары тиімді мөлшерлемелер.",
+                adv4_h: "24/7 қолдау",
+                adv4_p: "Қазақ, орыс және ағылшын тілдерінде боттарсыз қолдау қызметі.",
+                faq_title: "Жиі қойылатын сұрақтар",
+                faq_subtitle: "ZhibekBank-пен жұмыс істеу туралы білуіңіз керек барлық нәрсе"
+            },
+            en: {
+                announcement: "ZhibekBank — Innovative Digital Bank of Kazakhstan",
+                tagline_short: "Silk Road Financial Group",
+                nav_cards: "Cards",
+                nav_calc: "Calculator",
+                nav_rates: "Exchange Rates",
+                nav_about: "Advantages",
+                nav_faq: "FAQ",
+                btn_login: "Login Zhibek 24",
+                btn_open_card: "Order Card",
+                hero_badge: "Next Generation of Digital Banking",
+                hero_subtitle: "Connecting Silk Road traditions with advanced fintech. Instant fee-free transfers, up to 15% cashback and high KZT savings rates.",
+                hero_feat1: "0 ₸ Annual fee",
+                hero_feat2: "Up to 15% Cashback",
+                hero_feat3: "Loan in 2 mins",
+                btn_get_card: "Get Zhibek Card",
+                btn_calc_credit: "Calculate Loan",
+                cards_title: "Flagship Zhibek Cards",
+                cards_subtitle: "Choose the perfect card for daily needs and travel with tailored perks",
+                calc_badge: "Best Rates",
+                calc_heading: "Online Loan & Deposit Calculator",
+                calc_desc: "Calculate Zhibek Express unsecured loan terms or choose high-yield savings deposits.",
+                calc_guarantee: "Guaranteed by Kazakhstan Deposit Insurance Fund (KDIF)",
+                rates_title: "Zhibek Bank Currency Rates",
+                adv_title: "Why Choose ZhibekBank?",
+                adv1_h: "Instant Speed",
+                adv1_p: "Transfer money by phone number to any bank in Kazakhstan within seconds with zero fees.",
+                adv2_h: "High Security",
+                adv2_p: "Biometric 3D-Secure 2.0 protection and instant card locking in Zhibek 24 app.",
+                adv3_h: "High Yield",
+                adv3_p: "Maximum effective interest rates for KZT deposits with daily compounding.",
+                adv4_h: "24/7 Support",
+                adv4_p: "Human support in Kazakh, Russian, and English with zero waiting time.",
+                faq_title: "Frequently Asked Questions",
+                faq_subtitle: "Everything you need to know about ZhibekBank"
+            }
+        };
+
+        let currentLang = 'ru';
+
+        function switchLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('font-bold', 'text-zhibek-gold'));
+            document.getElementById(`lang-${lang}`).classList.add('font-bold', 'text-zhibek-gold');
+
+            document.querySelectorAll('[data-i18n]').forEach(elem => {
+                const key = elem.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    elem.textContent = translations[lang][key];
+                }
+            });
+        }
+
+        // --- FINANCIAL CALCULATOR LOGIC ---
+        let calcMode = 'credit'; // 'credit' or 'deposit'
+
+        function setCalcMode(mode) {
+            calcMode = mode;
+            const btnCredit = document.getElementById('calc-tab-credit');
+            const btnDeposit = document.getElementById('calc-tab-deposit');
+            const labelAmount = document.getElementById('label-amount');
+            const resMonthlyLabel = document.getElementById('res-monthly-label');
+            const resTotalLabel = document.getElementById('res-total-label');
+            const ctaBtn = document.getElementById('calc-cta-btn');
+
+            if (mode === 'credit') {
+                btnCredit.className = "px-5 py-2.5 rounded-lg font-semibold text-sm transition-all bg-zhibek-gold text-zhibek-dark shadow";
+                btnDeposit.className = "px-5 py-2.5 rounded-lg font-semibold text-sm transition-all text-gray-300 hover:text-white";
+                labelAmount.innerText = "Сумма кредита";
+                resMonthlyLabel.innerText = "Ежемесячный платеж";
+                resTotalLabel.innerText = "Общая сумма выплат";
+                ctaBtn.innerText = "Оформить заявку онлайн";
+            } else {
+                btnDeposit.className = "px-5 py-2.5 rounded-lg font-semibold text-sm transition-all bg-zhibek-gold text-zhibek-dark shadow";
+                btnCredit.className = "px-5 py-2.5 rounded-lg font-semibold text-sm transition-all text-gray-300 hover:text-white";
+                labelAmount.innerText = "Сумма вклада";
+                resMonthlyLabel.innerText = "Начисленный процент в мес.";
+                resTotalLabel.innerText = "Итоговая сумма с процентами";
+                ctaBtn.innerText = "Открыть депозит онлайн";
+            }
+            calculateFinancials();
+        }
+
+        function calculateFinancials() {
+            const amount = parseFloat(document.getElementById('input-amount').value);
+            const months = parseInt(document.getElementById('input-term').value);
+
+            document.getElementById('display-amount').innerText = amount.toLocaleString('ru-RU') + ' ₸';
+            document.getElementById('display-term').innerText = months + ' мес.';
+
+            if (calcMode === 'credit') {
+                // Credit Interest Rate ~18% per annum
+                const annualRate = 0.18;
+                const monthlyRate = annualRate / 12;
+                const monthlyPayment = (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -months));
+                const totalPayment = monthlyPayment * months;
+
+                document.getElementById('res-monthly').innerText = Math.round(monthlyPayment).toLocaleString('ru-RU') + ' ₸';
+                document.getElementById('res-total').innerText = Math.round(totalPayment).toLocaleString('ru-RU') + ' ₸';
+            } else {
+                // Deposit Interest Rate ~16.5% per annum
+                const annualRate = 0.165;
+                const totalProfit = amount * Math.pow(1 + (annualRate / 12), months) - amount;
+                const monthlyProfit = totalProfit / months;
+                const totalBalance = amount + totalProfit;
+
+                document.getElementById('res-monthly').innerText = '+' + Math.round(monthlyProfit).toLocaleString('ru-RU') + ' ₸';
+                document.getElementById('res-total').innerText = Math.round(totalBalance).toLocaleString('ru-RU') + ' ₸';
+            }
+        }
+
+        // --- CURRENCY CONVERTER LOGIC ---
+        const exchangeRates = {
+            KZT: 1,
+            USD: 500.8,
+            EUR: 544.5,
+            RUB: 5.3,
+            CNY: 69.2
+        };
+
+        function convertCurrency() {
+            const giveAmount = parseFloat(document.getElementById('conv-give').value) || 0;
+            const giveCurr = document.getElementById('conv-give-curr').value;
+            const getCurr = document.getElementById('conv-get-curr').value;
+
+            // Convert give to KZT first
+            const inKzt = giveAmount * exchangeRates[giveCurr];
+            // Convert KZT to get Currency
+            const result = inKzt / exchangeRates[getCurr];
+
+            document.getElementById('conv-get').value = result.toFixed(2) + ' ' + getCurr;
+        }
+
+        function swapCurrency() {
+            const giveSelect = document.getElementById('conv-give-curr');
+            const getSelect = document.getElementById('conv-get-curr');
+
+            const temp = giveSelect.value;
+            giveSelect.value = getSelect.value;
+            getSelect.value = temp;
+
+            convertCurrency();
+        }
+
+        // --- FAQ ACCORDION ---
+        function toggleFaq(id) {
+            const ans = document.getElementById(`faq-ans-${id}`);
+            const icon = document.getElementById(`faq-icon-${id}`);
+
+            if (ans.classList.contains('hidden')) {
+                ans.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                ans.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        // --- MODAL CONTROLS & HANDLERS ---
+        function openLoginModal() {
+            document.getElementById('modal-login').classList.remove('hidden');
+        }
+
+        function openGithubModal() {
+            document.getElementById('modal-github').classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function handleLoginSubmit(e) {
+            e.preventDefault();
+            alert('Симмуляция: Код подтверждения SMS отправлен на ваш номер!');
+            closeModal('modal-login');
+        }
+
+        function orderCardModal(cardName) {
+            alert(`Спасибо за выбор ${cardName}! Заявка принята. Менеджер ZhibekBank свяжется с вами.`);
+        }
+
+        function applyForLoanModal() {
+            alert('Заявка на расчет отправлена! Решение будет доступно в течение 60 секунд.');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Download Self HTML Utility
+        function downloadHtmlFile() {
+            const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'index.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // --- INITIALIZATION ON LOAD ---
+        window.onload = function() {
+            calculateFinancials();
+            convertCurrency();
+        };
+    </script>
+</body>
+</html>
